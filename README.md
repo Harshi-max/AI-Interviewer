@@ -66,8 +66,9 @@ Make sure you have the following installed:
 
 
 ```bash
-git clone https://github.com/adrianhajdin/ai_mock_interviews.git
-cd ai_mock_interviews
+git clone git clone https://github.com/Harshi-max/AI-Interviewer.git
+
+cd AI-Interviewer
 npm install
 ```
 ---
