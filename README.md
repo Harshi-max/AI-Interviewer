@@ -4,6 +4,11 @@ Welcome to the **AI Interview Prep Platform** — a full-stack application that 
 
 ---
 
+🎥 **[Watch Demo](https://drive.google.com/file/d/1stfj_JSbJNpSoYS3-ghYTUCXU-mlqvZ9/view?usp=drive_link)**
+
+---
+
+
 ## ⚙️ Tech Stack
 
 - ⚛️ **Next.js** — React Framework for Production
