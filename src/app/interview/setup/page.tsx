@@ -25,10 +25,13 @@ export default function InterviewSetup() {
   })
 
   const techStacks = [
-    "React", "Vue.js", "Angular", "Node.js", "Python", "Java", "C#", ".NET",
+    "React", "Vue.js", "Angular", "Node.js", "Python", "Java", "C++", "C#", ".NET",
     "PHP", "Laravel", "Django", "Express.js", "MongoDB", "PostgreSQL", "MySQL",
-    "AWS", "Azure", "Docker", "Kubernetes", "TypeScript", "JavaScript"
-  ]
+    "AWS", "Azure", "Docker", "Kubernetes", "TypeScript", "JavaScript", "Other"
+  ];
+
+  const [customTech, setCustomTech] = useState(""); // NEW STATE
+
 
   const handleTechStackChange = (tech: string) => {
     setFormData(prev => ({

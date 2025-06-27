@@ -1,17 +1,29 @@
 "use client";
 
 import { useEffect } from "react";
+import { Toaster } from "sonner";
 
 export default function ClientBody({
-  children,
-}: {
+                                     children,
+                                   }: {
   children: React.ReactNode;
 }) {
-  // Remove any extension-added classes during hydration
+  // Optional: Reset body classes on hydration
   useEffect(() => {
-    // This runs only on the client after hydration
     document.body.className = "antialiased";
   }, []);
 
-  return <div className="antialiased">{children}</div>;
+  return (
+      <div className="antialiased">
+        {children}
+
+        {/* Global toast notification system */}
+        <Toaster
+            position="top-center"
+            richColors
+            closeButton
+            duration={3000}
+        />
+      </div>
+  );
 }

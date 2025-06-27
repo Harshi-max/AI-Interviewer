@@ -14,10 +14,9 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
-import { Form } from "../../../ai_mock_interviews/components/ui/form";
-import { Button } from "../../../ai_mock_interviews/components/ui/button";
-
-import { signIn, signUp } from "../lib/actions/auth.action";
+import { Form } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { signIn, signUp } from "@/lib/actions/auth.action";
 import FormField from "./FormField";
 
 const authFormSchema = (type: FormType) => {
@@ -30,8 +29,9 @@ const authFormSchema = (type: FormType) => {
 
 const AuthForm = ({ type }: { type: FormType }) => {
   const router = useRouter();
-
   const formSchema = authFormSchema(type);
+  const isSignIn = type === "sign-in";
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,12 +45,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
     try {
       if (type === "sign-up") {
         const { name, email, password } = data;
-
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
         const result = await signUp({
           uid: userCredential.user.uid,
@@ -68,24 +63,15 @@ const AuthForm = ({ type }: { type: FormType }) => {
         router.push("/sign-in");
       } else {
         const { email, password } = data;
-
-        const userCredential = await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const idToken = await userCredential.user.getIdToken();
+
         if (!idToken) {
           toast.error("Sign in Failed. Please try again.");
           return;
         }
 
-        await signIn({
-          email,
-          idToken,
-        });
-
+        await signIn({ email, idToken });
         toast.success("Signed in successfully.");
         router.push("/");
       }
@@ -95,66 +81,65 @@ const AuthForm = ({ type }: { type: FormType }) => {
     }
   };
 
-  const isSignIn = type === "sign-in";
-
   return (
-    <div className="card-border lg:min-w-[566px]">
-      <div className="flex flex-col gap-6 card py-14 px-10">
-        <div className="flex flex-row gap-2 justify-center">
-          <Image src="/logo.svg" alt="logo" height={32} width={38} />
-          <h2 className="text-primary-100">PrepWise</h2>
-        </div>
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black px-4">
+        <div className="w-full max-w-md bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-xl shadow-lg p-8">
+          <div className="flex flex-col items-center mb-6">
+            <Image src="/logo.svg" alt="logo" height={38} width={38} />
+            <h2 className="text-2xl font-semibold text-center text-primary dark:text-white mt-2">PrepWise</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              Practice job interviews with AI
+            </p>
+          </div>
 
-        <h3>Practice job interviews with AI</h3>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+              {!isSignIn && (
+                  <FormField
+                      control={form.control}
+                      name="name"
+                      label="Name"
+                      placeholder="Your Name"
+                      type="text"
+                  />
+              )}
 
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="w-full space-y-6 mt-4 form"
-          >
-            {!isSignIn && (
               <FormField
-                control={form.control}
-                name="name"
-                label="Name"
-                placeholder="Your Name"
-                type="text"
+                  control={form.control}
+                  name="email"
+                  label="Email"
+                  placeholder="you@example.com"
+                  type="email"
               />
-            )}
 
-            <FormField
-              control={form.control}
-              name="email"
-              label="Email"
-              placeholder="Your email address"
-              type="email"
-            />
+              <FormField
+                  control={form.control}
+                  name="password"
+                  label="Password"
+                  placeholder="Enter your password"
+                  type="password"
+              />
 
-            <FormField
-              control={form.control}
-              name="password"
-              label="Password"
-              placeholder="Enter your password"
-              type="password"
-            />
+              <Button
+                  type="submit"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md py-2 transition-colors"
+              >
+                {isSignIn ? "Sign In" : "Create an Account"}
+              </Button>
+            </form>
+          </Form>
 
-            <Button className="btn" type="submit">
-              {isSignIn ? "Sign In" : "Create an Account"}
-            </Button>
-          </form>
-        </Form>
-
-        <p className="text-center">
-          {isSignIn ? "No account yet?" : "Have an account already?"}
-          <Link
-            href={!isSignIn ? "/sign-in" : "/sign-up"}
-            className="font-bold text-user-primary ml-1"
-          >
-            {!isSignIn ? "Sign In" : "Sign Up"}
-          </Link>
-        </p>
+          <div className="text-center mt-5 text-sm">
+            {isSignIn ? "Don't have an account?" : "Already have an account?"}
+            <Link
+                href={isSignIn ? "/sign-up" : "/sign-in"}
+                className="text-indigo-600 hover:underline font-medium ml-1"
+            >
+              {isSignIn ? "Sign Up" : "Sign In"}
+            </Link>
+          </div>
+        </div>
       </div>
-    </div>
   );
 };
 
