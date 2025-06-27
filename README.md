@@ -70,12 +70,17 @@ npm install
 **Set Up Environment Variables**
 
 
+# 🔊 Vapi AI (Voice Assistant)
 NEXT_PUBLIC_VAPI_WEB_TOKEN=your_vapi_web_token
 NEXT_PUBLIC_VAPI_WORKFLOW_ID=your_vapi_workflow_id
 
+# 🤖 Google Gemini AI
 GOOGLE_GENERATIVE_AI_API_KEY=your_google_gemini_api_key
 
+# 🌐 Base URL
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
 
+# 🔥 Firebase Client Config
 NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
@@ -83,9 +88,11 @@ NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_bucket
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 
+# 🔐 Firebase Admin SDK (server-side usage only)
 FIREBASE_PROJECT_ID=your_project_id
 FIREBASE_CLIENT_EMAIL=your_service_account_email
 FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY_CONTENT\n-----END PRIVATE KEY-----\n"
+
 
 ---
 
