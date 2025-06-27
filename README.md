@@ -47,6 +47,8 @@ Welcome to the **AI Interview Prep Platform** — a full-stack application that 
 
 - 🔁 **Reusable Codebase**  
   Built with scalability and maintainability in mind.
+ - 🔁 **Download and share the feedback report**  
+  Exported in a pdf format
 
 ---
 
